@@ -28,12 +28,9 @@ class Product
   function read() {
     try {
       // Select all products
-      $query = "SELECT c.name, p.id, p.name, p.description, p.price, p.category_id, p.created
+      $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
        FROM " . $this->table_name . " p 
-       LEFT JOIN 
-       categories c 
-       ON p.category_id = c.id
-       ORDER BY p.created DESC";
+       LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.created DESC";
 
       // Prepare to execute the query
       $stmt = $this->conn->prepare($query);
@@ -51,7 +48,7 @@ class Product
   function read_one() {
     try {
       // Select all products
-      $query = "SELECT c.name, p.id, p.name, p.description, p.price, p.category_id, p.created
+      $query = "SELECT c.name AS category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
        FROM " . $this->table_name . " p 
        LEFT JOIN 
        categories c 
