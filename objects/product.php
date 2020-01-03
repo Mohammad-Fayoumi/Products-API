@@ -68,22 +68,25 @@ class Product
       // get retrieved row
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      // set values to object properties
-      $this->id = $row['id'];
-      $this->name = $row['name'];
-      $this->price = $row['price'];
-      $this->description = html_entity_decode($row['description']);
-      $this->category_id = $row['category_id'];
-      $this->category_name = $row['category_name'];
-      $this->created = $row['created'];
+      if ($row != null) {
+        // set values to object properties
+        $this->id = $row['id'];
+        $this->name = $row['name'];
+        $this->price = $row['price'];
+        $this->description = html_entity_decode($row['description']);
+        $this->category_id = $row['category_id'];
+        $this->category_name = $row['category_name'];
+        $this->created = $row['created'];
 
-      return true;
+        return true;
+      }
+      return false;
     }
     catch (PDOException $exception) {
       $exception->getMessage();
     }
 
-    return false;
+
   }
 
   // Create product
@@ -103,6 +106,40 @@ class Product
     // execute query
     if ($stmt->execute()) {
       return true;
+    }
+
+    return false;
+  }
+
+// update the product
+  function update($data){
+    try {
+      $updated_vars = get_object_vars($data);
+      $product_id = (int)$updated_vars['id'];
+      unset($updated_vars['id']);
+
+      // update query
+      $query = "UPDATE " . $this->table_name . " SET ";
+      foreach ($updated_vars as $var => $value) {
+        if($var == "created") {
+          $query = $query . $var . " = from_unixtime(" .  $value . ", '%Y-%m-%d %h:%i:%s'), ";
+        }
+        else {
+          $query = $query . $var . " = '" .  $value . "', ";
+        }
+      }
+
+      $query = $query ."where id = ". $product_id .";";
+      $query = str_replace(', where', " where", $query);
+
+      // prepare query statement
+      $stmt = $this->conn->prepare($query);
+      if ($stmt->execute()) {
+        return true;
+      }
+    }
+    catch (Exception $e) {
+      echo $e->getMessage();
     }
 
     return false;

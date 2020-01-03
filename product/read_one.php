@@ -18,7 +18,7 @@ $db = $database->getConnection();
 // prepare product object
 $product = new Product($db);
 
-// read id
+// read input id
 $id = $_GET['id'];
 
 // validate product id
@@ -42,6 +42,15 @@ if (isset($id) && !empty($id)) {
       http_response_code(200);
 
       echo json_encode($product_item);
+    }
+
+    // check if product not found - response 404
+    else {
+      // set response code - 404 Not found
+      http_response_code(404);
+
+      // tell the user product does not exist
+      echo json_encode(array("message" => "Product does not exist."));
     }
   }
   else {
