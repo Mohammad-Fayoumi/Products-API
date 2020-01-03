@@ -53,7 +53,7 @@ class Product
        LEFT JOIN 
        categories c 
        ON p.category_id = c.id
-       where p.id = ?
+       WHERE p.id = ?
        LIMIT 0,1";
 
       // Prepare to execute the query
@@ -118,7 +118,7 @@ class Product
       $product_id = (int)$updated_vars['id'];
       unset($updated_vars['id']);
 
-      // update query
+      // Generate an updater query
       $query = "UPDATE " . $this->table_name . " SET ";
       foreach ($updated_vars as $var => $value) {
         if($var == "created") {
@@ -129,11 +129,32 @@ class Product
         }
       }
 
-      $query = $query ."where id = ". $product_id .";";
-      $query = str_replace(', where', " where", $query);
+      $query = $query ."WHERE id = ". $product_id .";";
+      $query = str_replace(', WHERE', " WHERE", $query);
 
       // prepare query statement
       $stmt = $this->conn->prepare($query);
+      if ($stmt->execute()) {
+        return true;
+      }
+    }
+    catch (Exception $e) {
+      echo $e->getMessage();
+    }
+
+    return false;
+  }
+
+  // delete product by id
+  function delete() {
+    try {
+      $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+
+      // Prepare to execute the query
+      $stmt = $this->conn->prepare($query);
+
+      // bind id of product to be updated
+      $stmt->bindParam(1, $this->id);
       if ($stmt->execute()) {
         return true;
       }
