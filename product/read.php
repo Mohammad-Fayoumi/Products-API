@@ -30,10 +30,8 @@ if ($num > 0) {
   $products['records'] = array();
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    // extract row
-    // this will make $row['name'] to
-    // just $name only
 
+    // extract row this will make $row['name'] to just $name only
     extract($row);
 
     /** @var TYPE_NAME $id */

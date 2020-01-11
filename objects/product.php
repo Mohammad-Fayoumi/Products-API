@@ -85,8 +85,6 @@ class Product
     catch (PDOException $exception) {
       $exception->getMessage();
     }
-
-
   }
 
   // Create product
@@ -164,5 +162,34 @@ class Product
     }
 
     return false;
+  }
+
+  // read products
+  function search($keyword) {
+    try {
+      // Select all products
+      $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+       FROM " . $this->table_name . " p LEFT JOIN categories c ON p.category_id = c.id
+       WHERE p.name LIKE ? OR c.name LIKE ? OR p.description LIKE ?  
+       ORDER BY p.created DESC";
+
+      // Prepare to execute the query
+      $stmt = $this->conn->prepare($query);
+
+      // sanitize
+      $keyword = "%{$this->sanitize($keyword)}%";
+
+      // bind parameters to the query
+      $stmt->bindParam(1, $keyword);
+      $stmt->bindParam(2, $keyword);
+      $stmt->bindParam(3, $keyword);
+
+      // Execute the query
+      $stmt->execute();
+    }
+    catch (PDOException $exception) {
+      $exception->getMessage();
+    }
+    return $stmt;
   }
 }

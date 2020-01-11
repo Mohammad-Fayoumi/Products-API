@@ -1,0 +1,2 @@
+#Redirect 301 /main.html /html/index.html
+ErrorDocument 404 /html/404.html
