@@ -9,6 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### FILE STRUCTURE
 At this project we will have the following main folders and files.
+```
 ├─ api/
 ├─── config/
 ├────── core.php - file used for core configuration
@@ -28,7 +29,7 @@ At this project we will have the following main folders and files.
 ├────── read.php - file that will output JSON data based from "categories" database records.
 ├─── shared/
 ├────── utilities.php - file that will return pagination array.
-
+```
 ### Prerequisites
 
 What things you need to install the software and how to install them
