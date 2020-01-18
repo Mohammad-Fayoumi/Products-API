@@ -1,11 +1,33 @@
 # Create A Simple REST API Using PHP and MYSQL
 
 A RESTful API is an application program interface (API) that uses HTTP requests to GET, PUT, POST and DELETE data.
-This REST API is needed AJAX CRUD aplication, PHP CRUD aplication, or any other CRUD aplication. 
+This REST API is needed for AJAX CRUD aplication, PHP CRUD aplication, or any other CRUD aplication. 
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### FILE STRUCTURE
+At this project we will have the following main folders and files.
+├─ api/
+├─── config/
+├────── core.php - file used for core configuration
+├────── database.php - file used for connecting to the database.
+├─── objects/
+├────── product.php - contains properties and methods for "product" database queries.
+├────── category.php - contains properties and methods for "category" database queries.
+├─── product/
+├────── create.php - file that will accept posted product data to be saved to database.
+├────── delete.php - file that will accept a product ID to delete a database record.
+├────── read.php - file that will output JSON data based from "products" database records.
+├────── read_paging.php - file that will output "products" JSON data with pagination.
+├────── read_one.php - file that will accept product ID to read a record from the database.
+├────── update.php - file that will accept a product ID to update a database record.
+├────── search.php - file that will accept keywords parameter to search "products" database.
+├─── category/
+├────── read.php - file that will output JSON data based from "categories" database records.
+├─── shared/
+├────── utilities.php - file that will return pagination array.
 
 ### Prerequisites
 
