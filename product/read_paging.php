@@ -13,7 +13,7 @@ include_once '../shared/utilities.php';
 
 // instantiate database object
 $database = new Database();
-$db= $database->getConnection();
+$db = $database->getConnection();
 
 // initialize product object
 $product = new Product($db);
@@ -52,6 +52,14 @@ if ($num > 0) {
 
     array_push($products['records'], $product_item);
   }
+
+  $pager = new Utilities();
+
+  // include paging
+  $total_rows = $product->count();
+  $products['total_rows'] = $total_rows;
+  $page_url = "{$core['url']}product/read_paging.php?";
+  $products['pages'] = $pager->getPaging($core['page'], $total_rows, $records_per_page, $page_url);
 
   // set response code - 200 OK
   http_response_code(200);

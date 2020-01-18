@@ -42,16 +42,14 @@ if (
   $product->created = date('Y-m-d H:i:s');
 
   // create the product
-  if($product->create()){
+  if ($product->create()) {
 
     // set response code - 201 created
     http_response_code(201);
 
     // tell the user
     echo json_encode(array("message" => "Product was created."));
-  }
-
-  else {
+  } else {
     // set response code - 503 service unavailable
     http_response_code(503);
 
@@ -61,7 +59,7 @@ if (
 }
 
 // tell the user data is incomplete
-else{
+else {
 
   // set response code - 400 bad request
   http_response_code(400);
