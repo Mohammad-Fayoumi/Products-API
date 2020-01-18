@@ -10,6 +10,9 @@ class Utilities {
         // count all products in the database to calculate total pages
         $total_pages = ceil($total_rows / $records_per_page);
 
+        // button for first page
+        $paging_arr["first"] = $page>1 ? "{$page_url}page=1" : "";
+
         // range of links to show
         $range = 2;
  
@@ -23,13 +26,16 @@ class Utilities {
         for($x = $initial_num; $x < $condition_limit_num; $x++){
             // be sure '$x is greater than 0' AND 'less than or equal to the $total_pages'
             if(($x > 0) && ($x <= $total_pages)){
-                $paging_arr['pages']["page"] = $x;
-                $paging_arr['pages']["url"] = "{$page_url}page={$x}";
-                $paging_arr['pages']["current_page"] = $x==$page ? "yes" : "no";
+                $paging_arr['pages'][$page_count]["page"] = $x;
+                $paging_arr['pages'][$page_count]["url"] = "{$page_url}page={$x}";
+                $paging_arr['pages'][$page_count]["current_page"] = $x==$page ? "yes" : "no";
  
                 $page_count++;
             }
         }
+
+        // button for last page
+        $paging_arr["last"] = "{$page_url}page={$total_pages}";
 
         // json format
         return $paging_arr;

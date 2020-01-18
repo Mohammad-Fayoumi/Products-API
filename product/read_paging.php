@@ -59,7 +59,7 @@ if ($num > 0) {
   $total_rows = $product->count();
   $products['total_rows'] = $total_rows;
   $page_url = "{$core['url']}product/read_paging.php?";
-  $products['pages'] = $pager->getPaging($core['page'], $total_rows, $records_per_page, $page_url);
+  $products_arr["paging"] = $pager->getPaging($core['page'], $total_rows, $records_per_page, $page_url);
 
   // set response code - 200 OK
   http_response_code(200);
